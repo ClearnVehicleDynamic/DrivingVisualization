@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debug: es6_vis",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/es6_vis.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                // "RUST_LOG": "debug"
+            }
+        }
+    ]
+}
