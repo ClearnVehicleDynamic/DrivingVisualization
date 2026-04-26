@@ -1,0 +1,144 @@
+================================================================================
+Go2 Robot Joint Connection Diagram
+Source: go2_mjx.xml
+================================================================================
+
+HARDWARE STRUCTURE (Top-Down Hierarchy)
+================================================================================
+
+                          [ World ]
+                              |
+                              | worldbody
+                              v
+                         [ base ]
+                     (freejoint, pos=0 0 0.445)
+                              |
+              +----------------+----------------+
+              |                |                |
+              v                v                v
+         [ base_0 ]      [ base_1 ]        [ base_2 ]
+         [ base_3 ]      [ base_4 ]       (visual geom)
+         [ collision ]   [ imu site ]     [ lidar site ]
+              |                |
+              +-------+--------+
+                      |
+     +-----------------+-----------------+-----------------+
+     |                 |                 |                 |
+     v                 v                 v                 v
+[ FL_hip ]        [ FR_hip ]       [ RL_hip ]        [ RR_hip ]
+ (pos=0.1934       (pos=0.1934      (pos=-0.1934      (pos=-0.1934
+  0.0465 0)        -0.0465 0)        0.0465 0)        -0.0465 0)
+     |                 |                 |                 |
+     v                 v                 v                 v
+[ abduction ]    [ abduction ]     [ abduction ]     [ abduction ]
+  axis=1 0 0       axis=1 0 0       axis=1 0 0       axis=1 0 0
+ (FL_hip_joint)  (FR_hip_joint)   (RL_hip_joint)   (RR_hip_joint)
+     |                 |                 |                 |
+     v                 v                 v                 v
+[ FL_thigh ]     [ FR_thigh ]      [ RL_thigh ]      [ RR_thigh ]
+ (pos=0 0.0955 0) (pos=0 -0.0955 0) (pos=0 0.0955 0) (pos=0 -0.0955 0)
+     |                 |                 |                 |
+     v                 v                 v                 v
+   [ hip ]           [ hip ]           [ hip ]           [ hip ]
+  axis=0 1 0        axis=0 1 0        axis=0 1 0        axis=0 1 0
+(FL_thigh_joint) (FR_thigh_joint) (RL_thigh_joint) (RR_thigh_joint)
+     |                 |                 |                 |
+     v                 v                 v                 v
+[ FL_calf ]      [ FR_calf ]       [ RL_calf ]       [ RR_calf ]
+ (pos=0 0 -0.213) (pos=0 0 -0.213) (pos=0 0 -0.213) (pos=0 0 -0.213)
+     |                 |                 |                 |
+     v                 v                 v                 v
+   [ knee ]          [ knee ]          [ knee ]          [ knee ]
+  axis=0 1 0        axis=0 1 0        axis=0 1 0        axis=0 1 0
+(FL_calf_joint)  (FR_calf_joint)  (RL_calf_joint)  (RR_calf_joint)
+
+
+================================================================================
+JOINT DETAILS
+================================================================================
+
+| Joint Name         | Type      | Axis   | Range              | Body (Parent) -> Body (Child) |
+|--------------------|-----------|--------|--------------------|-------------------------------|
+| freejoint          | free      | -      | 6-DOF              | world -> base                 |
+| FL_hip_joint       | hinge     | 1 0 0  | [-1.047, 1.047]    | base -> FL_thigh              |
+| FR_hip_joint       | hinge     | 1 0 0  | [-1.047, 1.047]    | base -> FR_thigh              |
+| RL_hip_joint       | hinge     | 1 0 0  | [-1.047, 1.047]    | base -> RL_thigh              |
+| RR_hip_joint       | hinge     | 1 0 0  | [-1.047, 1.047]    | base -> RR_thigh              |
+| FL_thigh_joint     | hinge     | 0 1 0  | [-1.571, 3.491]    | FL_hip -> FL_calf             |
+| FR_thigh_joint     | hinge     | 0 1 0  | [-1.571, 3.491]    | FR_hip -> FR_calf             |
+| RL_thigh_joint     | hinge     | 0 1 0  | [-1.571, 3.491]    | RL_hip -> RL_calf             |
+| RR_thigh_joint     | hinge     | 0 1 0  | [-1.571, 3.491]    | RR_hip -> RR_calf             |
+| FL_calf_joint      | hinge     | 0 1 0  | [-2.723, -0.838]   | FL_thigh -> (end effector)    |
+| FR_calf_joint      | hinge     | 0 1 0  | [-2.723, -0.838]   | FR_thigh -> (end effector)    |
+| RL_calf_joint      | hinge     | 0 1 0  | [-2.723, -0.838]   | RL_thigh -> (end effector)    |
+| RR_calf_joint      | hinge     | 0 1 0  | [-2.723, -0.838]   | RR_thigh -> (end effector)    |
+
+Note: Hip joint axis=1,0,0 means rotation around X-axis (abduction/adduction).
+      Thigh/Calf joint axis=0,1,0 means rotation around Y-axis (flexion/extension).
+
+
+================================================================================
+LEG POSITIONS (Bird's Eye View)
+================================================================================
+
+              Y+
+               |     FL (Front-Left)      FR (Front-Right)
+               |       (0.1934, 0.0465)    (0.1934, -0.0465)
+               |
+    X- --------o-------- X+
+               |     RL (Rear-Left)       RR (Rear-Right)
+               |      (-0.1934, 0.0465)    (-0.1934, -0.0465)
+               |
+
+
+================================================================================
+ACTUATORS (12 DOF)
+================================================================================
+
+| Actuator Name  | Joint           | Type   | Ctrl Range         |
+|----------------|-----------------|--------|--------------------|
+| FL_hip         | FL_hip_joint    | hip    | [-0.947, 0.947]    |
+| FL_thigh       | FL_thigh_joint  | abduction | [-1.4, 2.5]     |
+| FL_calf        | FL_calf_joint   | knee   | [-2.623, -0.848]  |
+| FR_hip         | FR_hip_joint    | hip    | [-0.947, 0.947]    |
+| FR_thigh       | FR_thigh_joint  | abduction | [-1.4, 2.5]     |
+| FR_calf        | FR_calf_joint   | knee   | [-2.623, -0.848]  |
+| RL_hip         | RL_hip_joint    | hip    | [-0.947, 0.947]   |
+| RL_thigh       | RL_thigh_joint  | abduction | [-1.4, 2.5]     |
+| RL_calf        | RL_calf_joint   | knee   | [-2.623, -0.848]  |
+| RR_hip         | RR_hip_joint    | hip    | [-0.947, 0.947]   |
+| RR_thigh       | RR_thigh_joint  | abduction | [-1.4, 2.5]     |
+| RR_calf        | RR_calf_joint   | knee   | [-2.623, -0.848]  |
+
+
+================================================================================
+SENSORS
+================================================================================
+
+Joint Position Sensors (12):
+  - FL_hip_joint, FL_thigh_joint, FL_calf_joint
+  - FR_hip_joint, FR_thigh_joint, FR_calf_joint
+  - RL_hip_joint, RL_thigh_joint, RL_calf_joint
+  - RR_hip_joint, RR_thigh_joint, RR_calf_joint
+
+Joint Velocity Sensors (12):
+  - Same joints as above (vel instead of pos)
+
+IMU Sensors (attached to base imu site):
+  - gyro, accelerometer, velocimeter
+  - upvector, orientation, global_position, global_linvel, global_angvel
+
+Foot Contact Sensors (4):
+  - FR_global_linvel, FL_global_linvel, RR_global_linvel, RL_global_linvel
+  - FR_pos, FL_pos, RR_pos, RL_pos (relative to imu)
+
+
+================================================================================
+GEOM CLASSES
+================================================================================
+
+| Class    | Type   | Purpose         | contype | conaffinity |
+|----------|--------|-----------------|---------|-------------|
+| visual   | mesh   | Rendering only  | 0       | 0           |
+| foot     | sphere | Contact point  | default | default     |
+| collision| varies | Physics coll.   | default | default     |

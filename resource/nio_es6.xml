@@ -1,6 +1,6 @@
 <mujoco model="nio_es6">
   <!-- compiler: 设置内置的解析器和编译器的设置选项 -->
-  <compiler angle="radian" meshdir="stl/" />
+  <compiler angle="radian" />
 
   <visual>
     <!-- 可视距离 -->
@@ -25,24 +25,24 @@
   </default>
 
   <asset>
-    <mesh name="es6_body" file="es6_simple/es6_body.stl" />
-    <mesh name="es6_tire_FL" file="es6_simple/es6_tire_FL.stl" />
-    <mesh name="es6_tire_FR" file="es6_simple/es6_tire_FR.stl" />
-    <mesh name="es6_tire_RL" file="es6_simple/es6_tire_RL.stl" />
-    <mesh name="es6_tire_RR" file="es6_simple/es6_tire_RR.stl" />
+    <mesh name="es6_body" file="stl/es6_simple/es6_body.obj" />
+    <mesh name="es6_tire_FL" file="stl/es6_simple/es6_tire_FL.obj" />
+    <mesh name="es6_tire_FR" file="stl/es6_simple/es6_tire_FR.obj" />
+    <mesh name="es6_tire_RL" file="stl/es6_simple/es6_tire_RL.obj" />
+    <mesh name="es6_tire_RR" file="stl/es6_simple/es6_tire_RR.obj" />
   </asset>
 
   <worldbody>
     <light name="sun" directional="true" diffuse="0.9 0.85 0.8" specular="0.6 0.6 0.6" pos="0 0 10" dir="-1 0.5 -1" castshadow="true"/>
-    <body name="CAR_BODY" pos="0 0 10">
+    <body name="es6_body" pos="0 0 0.4" euler="90 0 0">
       <!-- freejoint: 6-DOF 自由关节，车辆可在三维空间自由移动 -->
       <freejoint name="vehicle_freejoint"/>
       <!-- inertial: 质量与惯性张量，物理仿真必需 -->
       <inertial pos="0 0 0" mass="1500" diaginertia="1000 1000 1000"/>
       <!-- visual geom: 仅用于渲染 -->
-      <geom class="visual" mesh="es6_body.stl" pos="0 0 0" type="mesh"/>
+      <geom class="visual" mesh="es6_body" pos="0 0 0" type="mesh"/>
       <!-- collision geom: 用于碰撞检测 -->
-      <geom class="collision" type="box" size="2.5 1 0.5" pos="0 0 0"/>
+      <geom class="collision" type="box" size="0.1 0.1 1" pos="0 0 0"/>
     </body>
   </worldbody>
 

@@ -14,6 +14,7 @@
 # ==============================================================================
 
 import pathlib
+import os
 
 from motrixsim import SceneData, msd, run, step
 from motrixsim.render import RenderApp
@@ -27,6 +28,11 @@ VEHICLE_XML = "resource/nio_es6.xml"
 
 print(SCENE_XML)
 print(VEHICLE_XML)
+
+# 设置环境变量
+# RUST_BACKTRACE=1
+os.environ["RUST_BACKTRACE"] = "full"
+
 
 
 def main():
@@ -52,7 +58,7 @@ def main():
     # data: 存储物理仿真状态（位置、速度、力等）
     # render: 3D 可视化窗口，同步物理状态到图形渲染
     # =============================================================
-    with RenderApp() as render:
+    with RenderApp(log_level="info") as render:
         render.launch(model)
         data = SceneData(model)
 
