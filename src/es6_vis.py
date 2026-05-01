@@ -16,7 +16,7 @@
 import pathlib
 import os
 
-from motrixsim import SceneData, msd, run, step
+from motrixsim import SceneData, msd, run, step, viewer
 from motrixsim.render import RenderApp
 import motrixsim
 
@@ -25,6 +25,10 @@ import motrixsim
 # RESOURCE_DIR = pathlib.Path(__file__).parent.parent / "resource"
 SCENE_XML = "resource/common/flat_scene.xml"
 VEHICLE_XML = "resource/nio_es6.xml"
+
+# 添加 ABS PATH
+SCENE_XML = os.path.abspath(SCENE_XML)
+VEHICLE_XML = os.path.abspath(VEHICLE_XML)
 
 print(SCENE_XML)
 print(VEHICLE_XML)
@@ -36,6 +40,7 @@ os.environ["RUST_BACKTRACE"] = "full"
 
 
 def main():
+    view_mode:int = 2
 
     # =============================================================
     # 第一步：加载场景和车辆模型
@@ -52,38 +57,43 @@ def main():
     # =============================================================
     scene.attach(vehicle)
     model = scene.build()
+    data = SceneData(model)
 
     # =============================================================
     # 第三步：创建仿真数据容器和渲染窗口
     # data: 存储物理仿真状态（位置、速度、力等）
     # render: 3D 可视化窗口，同步物理状态到图形渲染
     # =============================================================
-    with RenderApp(log_level="info") as render:
-        render.launch(model)
-        data = SceneData(model)
+    
+    if (view_mode == 1):
+        with RenderApp(log_level="info") as render:
+            render.launch(model)
+            # data = SceneData(model)
 
-        # =============================================================
-        # 第四步：定义物理步进函数和渲染同步函数
-        # 将物理更新和渲染同步分离，便于后续扩展控制逻辑
-        # =============================================================
-        def phys_step():
-            model.step(data)
+            def phys_step():
+                model.step(data)
 
-        def render_step():
-            render.sync(data)
+            def render_step():
+                render.sync(data)
 
-        # =============================================================
-        # 第五步：启动仿真主循环
-        # phys_dt: 物理仿真时间步
-        # render_fps: 渲染帧率（60fps）
-        # run.render_loop 内部处理帧率调度
-        # =============================================================
-        run.render_loop(
-            model.options.timestep,
-            60,
-            phys_step,
-            render_step,
-        )
+            def on_click():
+                print("Button clicked!")
+
+            def on_toggle_changed(value: bool):
+                print("toggle value:", value)
+
+            render.opt.set_left_panel_vis(True)
+            render.ui.add_button("Click Me", on_click)
+            render.ui.add_toggle("Some Toggle", False, on_toggle_changed)
+
+            run.render_loop(
+                model.options.timestep,
+                60,
+                phys_step,
+                render_step,
+            )
+    elif (view_mode == 2):
+        viewer.launch(model, data)
 
 
 if __name__ == "__main__":

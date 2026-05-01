@@ -1,6 +1,6 @@
 <mujoco model="nio_es6">
   <!-- compiler: 设置内置的解析器和编译器的设置选项 -->
-  <compiler angle="radian" meshdir="stl/es6_simple/" />
+  <compiler angle="degree"  meshdir="stl/es6_simple/" />
 
   <visual>
     <!-- 可视距离 -->
@@ -22,10 +22,6 @@
     <default class="collision">
       <geom group="3"/>
     </default>
-    <!-- wheel: 轮子的默认配置 -->
-    <default class="wheel">
-      <joint type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
-    </default>
   </default>
 
   <asset>
@@ -37,7 +33,7 @@
   </asset>
 
   <worldbody>
-    <light name="sun" directional="true" diffuse="0.9 0.85 0.8" specular="0.6 0.6 0.6" pos="0 0 10" dir="-1 0.5 -1" castshadow="true"/>
+    <!-- <light name="sun" directional="true" diffuse="0.9 0.85 0.8" specular="0.6 0.6 0.6" pos="0 0 10" dir="-1 0.5 -1" castshadow="true"/> -->
 
     <!-- 车身根 body -->
     <body name="es6_body" pos="0 0 0.5" euler="90 0 0">
@@ -48,36 +44,38 @@
       <!-- visual geom: 仅用于渲染 -->
       <geom class="visual" mesh="es6_body" pos="0 0 0"/>
       <!-- collision geom: 用于碰撞检测 -->
-      <geom class="collision" type="box" size="0.1 0.1 1" pos="0 0 0"/>
+      <geom class="collision" type="box" size="0.1 0.1 1" pos="90 0 0"/>
+
+      <camera name="body_camera" pos="5 5 5" mode="targetbody" target="es6_body"/>
 
       <!-- 左前轮 (Front Left): x > 0, y > 0 -->
-      <body name="tire_FL" pos="1.0 0.5 0.3">
+      <body name="tire_FL" pos="0.85 0.35 1.55">
         <!-- hinge joint: 绕 Y 轴旋转（轮子滚动方向） -->
-        <joint name="joint_tire_FL" class="wheel"/>
-        <inertial pos="-1 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
+        <joint name="joint_tire_FL" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
+        <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
         <geom class="visual" mesh="es6_tire_FL" pos="0 0 0"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
       </body>
-
+      
       <!-- 右前轮 (Front Right): x > 0, y < 0 -->
-      <body name="tire_FR" pos="1.0 -0.5 0.3">
-        <joint name="joint_tire_FR" class="wheel"/>
+      <body name="tire_FR" pos="-1.0 0.35 1.55">
+        <joint name="joint_tire_FR" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
         <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
         <geom class="visual" mesh="es6_tire_FR" pos="0 0 0"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
       </body>
 
       <!-- 左后轮 (Rear Left): x < 0, y > 0 -->
-      <body name="tire_RL" pos="-1.0 0.5 0.3">
-        <joint name="joint_tire_RL" class="wheel"/>
+      <body name="tire_RL" pos="0.85 0.35 -1.38">
+        <joint name="joint_tire_RL" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
         <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
         <geom class="visual" mesh="es6_tire_RL" pos="0 0 0"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
       </body>
 
       <!-- 右后轮 (Rear Right): x < 0, y < 0 -->
-      <body name="tire_RR" pos="-1.0 -0.5 0.3">
-        <joint name="joint_tire_RR" class="wheel"/>
+      <body name="tire_RR" pos="-1.0 0.35 -1.38">
+        <joint name="joint_tire_RR" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
         <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
         <geom class="visual" mesh="es6_tire_RR" pos="0 0 0"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
