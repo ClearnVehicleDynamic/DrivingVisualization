@@ -15,6 +15,13 @@
 
 import pathlib
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s"))
+logger.addHandler(handler)
 
 from motrixsim import SceneData, msd, run, step, viewer
 from motrixsim.render import RenderApp
@@ -37,6 +44,9 @@ print(VEHICLE_XML)
 # RUST_BACKTRACE=1
 os.environ["RUST_BACKTRACE"] = "full"
 
+# logging config
+logger.info(f"Scene XML: {SCENE_XML}")
+logger.info(f"Vehicle XML: {VEHICLE_XML}")
 
 
 def main():
@@ -71,16 +81,22 @@ def main():
             # data = SceneData(model)
 
             def phys_step():
+                # pass
+                current_pos = data.dof_pos
+                # logger.info(f"Current Position Len: {len(current_pos)}")
+                # current_pos[1] += -0.001
+                # data.set_dof_pos(current_pos, model)
+                # data.set_dof_pos()
                 model.step(data)
 
             def render_step():
                 render.sync(data)
 
             def on_click():
-                print("Button clicked!")
+                logger.info("Button clicked!")
 
             def on_toggle_changed(value: bool):
-                print("toggle value:", value)
+                logger.info("toggle value:", value)
 
             render.opt.set_left_panel_vis(True)
             render.ui.add_button("Click Me", on_click)
