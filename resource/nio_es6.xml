@@ -25,6 +25,12 @@
   </default>
 
   <asset>
+    <material name="metal" rgba=".9 .95 .95 1"/>
+    <material name="black" rgba="0 0 0 1"/>
+    <material name="white" rgba="1 1 1 1"/>
+    <material name="gray" rgba="0.23 0.23 0.23 1"/>
+    <material name="blue_1" rgba="0.745 0.796 0.8588 1"/>
+
     <mesh name="es6_body"    file="es6_body.obj" />
     <mesh name="es6_tire_FL" file="es6_tire_FL.obj" />
     <mesh name="es6_tire_FR" file="es6_tire_FR.obj" />
@@ -36,13 +42,13 @@
     <!-- <light name="sun" directional="true" diffuse="0.9 0.85 0.8" specular="0.6 0.6 0.6" pos="0 0 10" dir="-1 0.5 -1" castshadow="true"/> -->
 
     <!-- 车身根 body -->
-    <body name="es6_body" pos="0 0 0.5" euler="90 0 0">
+    <body name="es6_body" pos="0 0 0.1" euler="90 0 0">
       <!-- freejoint: 6-DOF 自由关节，车辆可在三维空间自由移动 -->
       <freejoint name="vehicle_freejoint"/>
       <!-- inertial: 质量与惯性张量，物理仿真必需 -->
       <inertial pos="0 0 0" mass="1500" diaginertia="1000 1000 1000"/>
       <!-- visual geom: 仅用于渲染 -->
-      <geom class="visual" mesh="es6_body" pos="0 0 0"/>
+      <geom class="visual" mesh="es6_body" pos="0 0 0" material="blue_1"/>
       <!-- collision geom: 用于碰撞检测 -->
       <geom class="collision" type="box" size="0.1 0.1 1" pos="90 0 0"/>
 
@@ -53,7 +59,7 @@
         <!-- hinge joint: 绕 Y 轴旋转（轮子滚动方向） -->
         <joint name="joint_tire_FL" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
         <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
-        <geom class="visual" mesh="es6_tire_FL" pos="0 0 0"/>
+        <geom class="visual" mesh="es6_tire_FL" pos="0 0 0" material="gray"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
       </body>
       
@@ -61,7 +67,7 @@
       <body name="tire_FR" pos="-1.0 0.35 1.55">
         <joint name="joint_tire_FR" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
         <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
-        <geom class="visual" mesh="es6_tire_FR" pos="0 0 0"/>
+        <geom class="visual" mesh="es6_tire_FL" pos="0 0 0" euler="0 180 0" material="gray"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
       </body>
 
@@ -69,7 +75,7 @@
       <body name="tire_RL" pos="0.85 0.35 -1.38">
         <joint name="joint_tire_RL" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
         <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
-        <geom class="visual" mesh="es6_tire_RL" pos="0 0 0"/>
+        <geom class="visual" mesh="es6_tire_RL" pos="0 0 0" material="gray"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
       </body>
 
@@ -77,7 +83,7 @@
       <body name="tire_RR" pos="-1.0 0.35 -1.38">
         <joint name="joint_tire_RR" type="hinge" axis="0 1 0" damping="0.5" frictionloss="0.1"/>
         <inertial pos="0 0 0" mass="20" diaginertia="0.5 0.5 0.5"/>
-        <geom class="visual" mesh="es6_tire_RR" pos="0 0 0"/>
+        <geom class="visual" mesh="es6_tire_RL" pos="0 0 0" euler="0 180 0" material="gray"/>
         <geom class="collision" type="cylinder" size="0.3 0.15" pos="0 0 0" euler="0 0 0"/>
       </body>
     </body>
