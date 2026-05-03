@@ -50,7 +50,7 @@ logger.info(f"Vehicle XML: {VEHICLE_XML}")
 
 
 def main():
-    view_mode:int = 2
+    view_mode:int = 1
 
     # =============================================================
     # 第一步：加载场景和车辆模型
@@ -87,6 +87,16 @@ def main():
                 # current_pos[1] += -0.001
                 # data.set_dof_pos(current_pos, model)
                 # data.set_dof_pos()
+                # motor_tire_FL_roll = model.get_actuator("motor_tire_FL_roll")
+                # motor_tire_FR_roll = model.get_actuator("motor_tire_FR_roll")
+                # motor_tire_RL_roll = model.get_actuator("motor_tire_RL_roll")
+                # motor_tire_RR_roll = model.get_actuator("motor_tire_RR_roll")
+
+                # motor_tire_FL_roll.set_ctrl(data, 100)
+                # motor_tire_FR_roll.set_ctrl(data, 100)
+                # motor_tire_RL_roll.set_ctrl(data, 100)
+                # motor_tire_RR_roll.set_ctrl(data, 100)
+
                 model.step(data)
 
             def render_step():

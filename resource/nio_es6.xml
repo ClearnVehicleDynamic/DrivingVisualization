@@ -93,9 +93,9 @@
   </worldbody>
 
   <actuator>
-    <motor name="velocity_tire_FL_roll" joint="joint_tire_FL_roll" ctrllimited="false" forcelimited="false" gear="1"/>
-    <motor name="velocity_tire_FR_roll" joint="joint_tire_FR_roll" ctrllimited="false" forcelimited="false" gear="1"/>
-    <motor name="velocity_tire_RL_roll" joint="joint_tire_RL_roll" ctrllimited="false" forcelimited="false" gear="1"/>
-    <motor name="velocity_tire_RR_roll" joint="joint_tire_RR_roll" ctrllimited="false" forcelimited="false" gear="1"/>
+    <motor name="motor_tire_FL_roll" joint="joint_tire_FL_roll" ctrllimited="false" forcelimited="false" gear="1"/>
+    <motor name="motor_tire_FR_roll" joint="joint_tire_FR_roll" ctrllimited="false" forcelimited="false" gear="1"/>
+    <motor name="motor_tire_RL_roll" joint="joint_tire_RL_roll" ctrllimited="false" forcelimited="false" gear="1"/>
+    <motor name="motor_tire_RR_roll" joint="joint_tire_RR_roll" ctrllimited="false" forcelimited="false" gear="1"/>
   </actuator>
 </mujoco>
